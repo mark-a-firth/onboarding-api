@@ -1,0 +1,23 @@
+{
+  "name": "api-onboarding",
+  "version": "1.0.0",
+  "description": "Design and Build Great Web APIs - Onboarding API exercise",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mark-a-firth/onboarding-api.git"
+  },
+  "keywords": [
+    "api",
+    "onboarding"
+  ],
+  "author": "NA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mark-a-firth/onboarding-api/issues"
+  },
+  "homepage": "https://github.com/mark-a-firth/onboarding-api#readme"
+}
