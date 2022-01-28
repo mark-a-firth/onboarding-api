@@ -1,17 +1,17 @@
 Home
-​->​​ ​​Company​
-​->​​ ​​CreateCompany(companyName,​​ ​​email,​​ ​​phone,​​ ​​status)​
-​​->​​ ​​CreatedCompany​
+​->​​ ​​Customer
+​->​​ ​​CreateCompany(companyName,​​ ​​address, email,​​ ​​telephone,​​ ​​status)​
+​​->​​ ​​CreatedCustomer​
 ​​->​​ ​​Home​
 ​
 ​Home
 ​​->​​ ​​Account​
-​​->​​ ​​CreateAccount(companyId,​​ ​​division,​​ ​​defaultDiscount,​​ ​​creditLimit)​
+​​->​​ ​​CreateAccount(companyId,​​ ​​division,​​ ​​discount,​​ ​​creditLimit)​
 ​​->​​ ​​CreatedAccount​
 ​​->​​ ​​Home​
 ​
 ​Home
-​​->​​ ​​SalesActivity​
-​​->​​ ​​CreateActivity(companyId,​​ ​​accountId,​​ ​​activityType,​​ ​​dateScheduled,​​ ​​note)​
+​​->​​ ​​Activity​
+​​->​​ ​​CreateActivity(companyId,​​ ​​accountId,​​ ​​activityType,​​ ​​dateScheduled, notes)​
 ​​->​​ ​​CreatedActivity​
 ​​->​​ ​​Home
