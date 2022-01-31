@@ -1,0 +1,794 @@
+---
+openapi: 3.0.0
+info:
+  title: BigCo Onboarding API
+  description: This is the OAS document for BigCo **Onboarding API**
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/mark-a-firth/onboarding-api/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://virtserver.swaggerhub.com/mamund/onboarding-master/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: onboarding
+  description: Onboarding APIs
+paths:
+  /:
+    get:
+      tags:
+      - onboarding
+      summary: Use this to retrieve the home page for the onboarding API
+      operationId: home
+      parameters:
+      - name: ETag
+        in: header
+        description: Conditional Read Header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: zaxscdvfbg
+      responses:
+        "200":
+          description: OK
+          content:
+            application/prag+json:
+              schema:
+                $ref: '#/components/schemas/reply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reply'
+        default:
+          description: unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /start:
+    post:
+      tags:
+      - onboarding
+      summary: Use this to start process of onboarding a customer
+      operationId: startOnboarding
+      parameters:
+      - name: if-None-Match
+        in: header
+        description: Conditional Create Header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: '*'
+      requestBody:
+        $ref: '#/components/requestBodies/start'
+      responses:
+        "201":
+          description: Created
+          headers:
+            Location:
+              description: URL of created resource
+              style: simple
+              explode: false
+              schema:
+                type: string
+              example: /wip/123
+        default:
+          description: unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /wip:
+    get:
+      tags:
+      - onboarding
+      summary: Use this to get a list of onboarding records
+      operationId: wipList
+      parameters:
+      - name: status
+        in: query
+        description: status flag
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: pending
+          enum:
+          - pending
+          - completed
+          - abandoned
+      - name: ETag
+        in: header
+        description: Conditional Read Header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: zaxscdvfbg
+      responses:
+        "200":
+          description: OK
+          content:
+            application/prag+json:
+              schema:
+                $ref: '#/components/schemas/reply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reply'
+        default:
+          description: unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /wip/{identifier}:
+    get:
+      tags:
+      - onboarding
+      summary: Use this to return a single onboarding record
+      operationId: wipItem
+      parameters:
+      - name: identifier
+        in: path
+        description: record identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: ETag
+        in: header
+        description: Conditional Read Header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: zaxscdvfbg
+      responses:
+        "200":
+          description: OK
+          content:
+            application/prag+json:
+              schema:
+                $ref: '#/components/schemas/reply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reply'
+        default:
+          description: unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /wip/{identifier}/customer:
+    get:
+      tags:
+      - onboarding
+      summary: Use this to get the customer data for this WIP record
+      operationId: getCustomerData
+      parameters:
+      - name: identifier
+        in: path
+        description: record identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: ETag
+        in: header
+        description: Conditional Read Header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: zaxscdvfbg
+      responses:
+        "200":
+          description: OK
+          content:
+            application/prag+json:
+              schema:
+                $ref: '#/components/schemas/reply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reply'
+        default:
+          description: unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    put:
+      tags:
+      - onboarding
+      summary: Use this to update the customer data for this WIP record
+      operationId: updateCustomerData
+      parameters:
+      - name: identifier
+        in: path
+        description: record identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: If-Match
+        in: header
+        description: Conditional Update Header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: zaxscdvfbg
+      requestBody:
+        $ref: '#/components/requestBodies/customer'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/prag+json:
+              schema:
+                $ref: '#/components/schemas/reply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reply'
+        default:
+          description: unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /wip/{identifier}/account:
+    get:
+      tags:
+      - onboarding
+      summary: Use this to get the account data for this WIP recxord
+      operationId: getAccountData
+      parameters:
+      - name: identifier
+        in: path
+        description: record identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: ETag
+        in: header
+        description: Conditional Read Header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: zaxscdvfbg
+      responses:
+        "200":
+          description: OK
+          content:
+            application/prag+json:
+              schema:
+                $ref: '#/components/schemas/reply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reply'
+        default:
+          description: unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    put:
+      tags:
+      - onboarding
+      summary: Use this to update the account data for this WIP record
+      operationId: updateAccountData
+      parameters:
+      - name: identifier
+        in: path
+        description: record identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: If-Match
+        in: header
+        description: Conditional Update Header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: zaxscdvfbg
+      requestBody:
+        $ref: '#/components/requestBodies/account'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/prag+json:
+              schema:
+                $ref: '#/components/schemas/reply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reply'
+        default:
+          description: unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /wip/{identifier}/activity:
+    get:
+      tags:
+      - onboarding
+      summary: Use this to get the activity data for this WIP recxord
+      operationId: getActivityData
+      parameters:
+      - name: identifier
+        in: path
+        description: record identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: ETag
+        in: header
+        description: Conditional Read Header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: zaxscdvfbg
+      responses:
+        "200":
+          description: OK
+          content:
+            application/prag+json:
+              schema:
+                $ref: '#/components/schemas/reply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reply'
+        default:
+          description: unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    put:
+      tags:
+      - onboarding
+      summary: Use this to update the activity data for this WIP record
+      operationId: updateActivityData
+      parameters:
+      - name: identifier
+        in: path
+        description: record identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: If-Match
+        in: header
+        description: Conditional Update Header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: zaxscdvfbg
+      requestBody:
+        $ref: '#/components/requestBodies/activity'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/prag+json:
+              schema:
+                $ref: '#/components/schemas/reply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reply'
+        default:
+          description: unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /wip/{identifier}/status:
+    get:
+      tags:
+      - onboarding
+      summary: Use this to get the status for this WIP recxord
+      operationId: getStatus
+      parameters:
+      - name: identifier
+        in: path
+        description: record identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: ETag
+        in: header
+        description: Conditional Read Header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: zaxscdvfbg
+      responses:
+        "200":
+          description: OK
+          content:
+            application/prag+json:
+              schema:
+                $ref: '#/components/schemas/reply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reply'
+        default:
+          description: unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    put:
+      tags:
+      - onboarding
+      summary: Use this to update the status for this WIP record
+      operationId: updateStatus
+      parameters:
+      - name: identifier
+        in: path
+        description: record identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/status'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/prag+json:
+              schema:
+                $ref: '#/components/schemas/reply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reply'
+        default:
+          description: unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+components:
+  schemas:
+    error:
+      type: object
+      properties:
+        type:
+          type: string
+          example: Invalid Record
+        title:
+          type: string
+          example: One or more missing properties
+        detail:
+          type: string
+          example: Review the submitted record for missing required properties.
+    reply:
+      type: object
+      properties:
+        metadata:
+          type: array
+          items:
+            $ref: '#/components/schemas/reply_metadata'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/reply_links'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/wip'
+    wipCollection:
+      type: array
+      items:
+        $ref: '#/components/schemas/wip'
+    wip:
+      type: object
+      properties:
+        wipIdentifier:
+          type: string
+          example: q1w2e3r4
+        customerIdentifier:
+          type: string
+          example: w2e3r4t5
+        accountIdentifier:
+          type: string
+          example: e3r4t5y6
+        activityIdentifier:
+          type: string
+          example: r4t5y6u7
+        givenName:
+          type: string
+          example: Idara
+        familyName:
+          type: string
+          example: Adams
+        email:
+          type: string
+          example: idara.adams@example.org
+        telephone:
+          type: string
+          example: 123.456.7890
+        status:
+          type: string
+          example: pending
+        maxValue:
+          type: string
+          example: "5000"
+        discount:
+          type: string
+          example: "10"
+    start:
+      type: object
+      properties:
+        identifier:
+          type: string
+          example: q1w2e3r4
+    customer:
+      type: object
+      properties:
+        identifier:
+          type: string
+          example: q1w2e3r4
+        givenName:
+          type: string
+          example: Idara
+        familyName:
+          type: string
+          example: Adams
+    account:
+      type: object
+      properties:
+        identifier:
+          type: string
+          example: q1w2e3r4
+    activity:
+      type: object
+      properties:
+        identifier:
+          type: string
+          example: q1w2e3r4
+    status:
+      type: object
+      properties:
+        identifier:
+          type: string
+          example: q1w2e3r4
+        status:
+          type: string
+          example: pending
+          enum:
+          - pending
+          - completed
+          - abandoned
+    reply_metadata:
+      properties:
+        id:
+          type: string
+          example: title
+        value:
+          type: string
+          example: BigCo Onboarding
+    reply_properties:
+      properties:
+        name:
+          type: string
+          example: ""
+        value:
+          type: string
+          example: ""
+    reply_links:
+      properties:
+        id:
+          type: string
+          example: home
+        href:
+          type: string
+          example: http://api.example.org/
+        title:
+          type: string
+          example: Home Page
+        method:
+          type: string
+          example: GET
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/reply_properties'
+  responses:
+    created:
+      description: Created
+      headers:
+        Location:
+          description: URL of created resource
+          style: simple
+          explode: false
+          schema:
+            type: string
+          example: /wip/123
+    error:
+      description: unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/error'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+    reply:
+      description: OK
+      content:
+        application/prag+json:
+          schema:
+            $ref: '#/components/schemas/reply'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/reply'
+  parameters:
+    ifNoneMatch:
+      name: if-None-Match
+      in: header
+      description: Conditional Create Header
+      required: false
+      style: simple
+      explode: false
+      schema:
+        type: string
+        example: '*'
+    ifMatch:
+      name: If-Match
+      in: header
+      description: Conditional Update Header
+      required: false
+      style: simple
+      explode: false
+      schema:
+        type: string
+        example: zaxscdvfbg
+    eTag:
+      name: ETag
+      in: header
+      description: Conditional Read Header
+      required: false
+      style: simple
+      explode: false
+      schema:
+        type: string
+        example: zaxscdvfbg
+    identifier:
+      name: identifier
+      in: path
+      description: record identifier
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    status:
+      name: status
+      in: query
+      description: status flag
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+        example: pending
+        enum:
+        - pending
+        - completed
+        - abandoned
+  requestBodies:
+    start:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/start'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/start'
+    customer:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/customer'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/customer'
+    account:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/account'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/account'
+    activity:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/activity'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/activity'
+    status:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/status'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/status'
